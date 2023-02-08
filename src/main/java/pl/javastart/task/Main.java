@@ -8,9 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            String productsFile = "C:/JavaStartProjects/jjd-ind-44_JacekWojt_zad_13.3/src/main/resources/products.csv";
+            String productsFile = "src/main/resources/products.csv";
             Products[] products = Utils.createProductsArray(productsFile);
-            String currenciesFile = "C:/JavaStartProjects/jjd-ind-44_JacekWojt_zad_13.3/src/main/resources/currencies.csv";
+            String currenciesFile = "src/main/resources/currencies.csv";
             Map<String, BigDecimal> currencies = Utils.createCurrenciesMap(currenciesFile);
             BigDecimal totalInEuro = Calculator.totalInEuro(products, currencies);
             System.out.printf("Suma wszystkich produktów w EUR: %.2f%n", totalInEuro.doubleValue());

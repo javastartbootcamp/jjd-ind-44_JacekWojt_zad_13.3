@@ -10,38 +10,41 @@ import java.util.TreeMap;
 public class Utils {
 
     public static Map<String, BigDecimal> createCurrenciesMap(String currenciesFile) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(currenciesFile));
-        int lines = countLines(currenciesFile);
-        Map<String, BigDecimal> currencies = new TreeMap<>();
-        for (int i = 0; i < lines; i++) {
-            String line = scanner.nextLine();
-            String[] split = line.split(";");
-            BigDecimal number = BigDecimal.valueOf(Double.parseDouble(split[1]));
-            currencies.put(split[0], number);
+        try (Scanner scanner = new Scanner(new File(currenciesFile))) {
+            int lines = countLines(currenciesFile);
+            Map<String, BigDecimal> currencies = new TreeMap<>();
+            for (int i = 0; i < lines; i++) {
+                String line = scanner.nextLine();
+                String[] split = line.split(";");
+                BigDecimal number = BigDecimal.valueOf(Double.parseDouble(split[1]));
+                currencies.put(split[0], number);
+            }
+            return currencies;
         }
-        return currencies;
     }
 
     public static Products[] createProductsArray(String fileName) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(fileName));
-        int lines = countLines(fileName);
-        Products[] products = new Products[lines];
-        for (int i = 0; i < lines; i++) {
-            String line = scanner.nextLine();
-            String[] split = line.split(";");
-            BigDecimal price = BigDecimal.valueOf(Double.parseDouble(split[1]));
-            products[i] = new Products(split[0], price, split[2]);
+        try (Scanner scanner = new Scanner(new File(fileName))) {
+            int lines = countLines(fileName);
+            Products[] products = new Products[lines];
+            for (int i = 0; i < lines; i++) {
+                String line = scanner.nextLine();
+                String[] split = line.split(";");
+                BigDecimal price = BigDecimal.valueOf(Double.parseDouble(split[1]));
+                products[i] = new Products(split[0], price, split[2]);
+            }
+            return products;
         }
-        return products;
     }
 
     private static int countLines(String fileName) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(fileName));
-        int lines = 0;
-        while (scanner.hasNextLine()) {
-            lines++;
-            scanner.nextLine();
+        try (Scanner scanner = new Scanner(new File(fileName))) {
+            int lines = 0;
+            while (scanner.hasNextLine()) {
+                lines++;
+                scanner.nextLine();
+            }
+            return lines;
         }
-        return lines;
     }
 }
